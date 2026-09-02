@@ -1,8 +1,9 @@
 import './App.css';
-import { BrowserRouter as Router, Route, Routes, useLocation } from 'react-router-dom';
+import { BrowserRouter as Router, Navigate, Route, Routes, useLocation } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import Home from './pages/Home';
+import Particle from './pages/Particle';
 
 function AppContent() {
   const location = useLocation();
@@ -15,6 +16,9 @@ function AppContent() {
       <main>
         <Routes>
           <Route path='/' element={<Home />} />
+          <Route path='/particle' element={<Particle />} />
+          <Route path='/about' element={<Navigate to='/#about' replace />} />
+          <Route path='*' element={<Navigate to='/' replace />} />
         </Routes>
       </main>
       <Footer />

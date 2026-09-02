@@ -76,11 +76,11 @@ const Navbar = () => {
       <nav
         id="mobile-navigation"
         aria-label="Mobile navigation"
-        className={`overflow-hidden border-t border-gray-100 bg-white transition-all duration-300 md:hidden ${
-          isOpen ? "max-h-screen opacity-100" : "max-h-0 opacity-0"
+        className={`fixed inset-x-0 top-14 bottom-0 z-40 overflow-y-auto bg-white px-5 py-4 transition-transform duration-300 ease-in-out md:hidden ${
+          isOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >
-        <ul className="mx-auto max-w-7xl px-4 py-3 sm:px-6">
+        <ul className="flex min-h-full flex-col justify-start gap-2">
           {navItems.map((item, index) => (
             <li key={item.name}>
               <a
