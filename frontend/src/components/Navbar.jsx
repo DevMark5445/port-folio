@@ -1,0 +1,106 @@
+
+import { useState } from "react";
+import { FaNodeJs, FaBars, FaTimes } from "react-icons/fa";
+
+const Navbar = () => {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const navItems = [
+    { name: "Home", href: "#home" },
+    { name: "About", href: "#about" },
+    { name: "Skills", href: "#skills" },
+    { name: "Education", href: "#education" },
+    { name: "Work", href: "#work" },
+    { name: "Experience", href: "#experience" },
+    { name: "Contact", href: "#contact" },
+  ];
+
+  const closeMenu = () => {
+    setIsOpen(false);
+  };
+
+  return (
+    <header className="fixed top-0 left-0 z-50 w-full bg-white shadow-md">
+      <div className="flex h-14 w-full items-center justify-between px-3 sm:px-4 lg:px-6">
+        
+        {/* Logo */}
+        <a
+          href="#home"
+          onClick={closeMenu}
+          className="flex items-center gap-2 text-2xl font-bold text-gray-900 transition-colors duration-300 hover:text-blue-600"
+          aria-label="Marktech - Home"
+        >
+          <FaNodeJs className="text-blue-600" />
+          <span>Marktech</span>
+        </a>
+
+        {/* Desktop Navigation */}
+        <nav className="hidden md:block" aria-label="Main navigation">
+          <ul className="flex items-center gap-1">
+            {navItems.map((item, index) => (
+              <li key={item.name}>
+                <a
+                  href={item.href}
+                  className={`relative block px-4 py-2 text-sm font-medium transition-colors duration-300 ${
+                    index === 0
+                      ? "text-blue-600"
+                      : "text-gray-700 hover:text-blue-600"
+                  }`}
+                >
+                  {item.name}
+
+                  {/* Active underline */}
+                  {index === 0 && (
+                    <span className="absolute bottom-0 left-4 right-4 h-0.5 rounded-full bg-blue-600" />
+                  )}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </nav>
+
+        {/* Mobile Menu Button */}
+        <button
+          type="button"
+          onClick={() => setIsOpen((prev) => !prev)}
+          className="rounded-lg p-2 text-2xl text-gray-800 transition-colors hover:bg-gray-100 hover:text-blue-600 md:hidden"
+          aria-label={isOpen ? "Close navigation menu" : "Open navigation menu"}
+          aria-expanded={isOpen}
+          aria-controls="mobile-navigation"
+        >
+          {isOpen ? <FaTimes /> : <FaBars />}
+        </button>
+      </div>
+
+      {/* Mobile Navigation */}
+      <nav
+        id="mobile-navigation"
+        aria-label="Mobile navigation"
+        className={`overflow-hidden border-t border-gray-100 bg-white transition-all duration-300 md:hidden ${
+          isOpen ? "max-h-screen opacity-100" : "max-h-0 opacity-0"
+        }`}
+      >
+        <ul className="mx-auto max-w-7xl px-4 py-3 sm:px-6">
+          {navItems.map((item, index) => (
+            <li key={item.name}>
+              <a
+                href={item.href}
+                onClick={closeMenu}
+                className={`block rounded-lg px-4 py-3 text-base font-medium transition-colors duration-200 ${
+                  index === 0
+                    ? "bg-blue-50 text-blue-600"
+                    : "text-gray-700 hover:bg-gray-50 hover:text-blue-600"
+                }`}
+              >
+                {item.name}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+    </header>
+  );
+};
+
+export default Navbar;
+
