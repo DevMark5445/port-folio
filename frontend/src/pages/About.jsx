@@ -41,7 +41,7 @@ export default function About() {
 
           <div className="mt-14">
             <a
-              href="https://drive.google.com/file/d/1rZiXl562q7aVyk1kJ2nO85YBAq8ixTiw/view"
+              // href="https://drive.google.com/file/d/1rZiXl562q7aVyk1kJ2nO85YBAq8ixTiw/view"
               target="_blank"
               rel="noreferrer"
               className="group inline-flex items-center gap-2 rounded-lg bg-indigo-600 px-8 py-4 font-display text-lg font-semibold tracking-wide text-white shadow-lg shadow-indigo-600/40 transition hover:bg-indigo-700"

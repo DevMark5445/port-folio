@@ -3,6 +3,7 @@ import { useTypewriter } from "../hooks/useTypewriter";
 import ParticleBackground from "./Particle";
 import About from "./About";
 import Skills from "./Skills";
+import Education from "./Education";
 
 const socials = [
   { icon: FaLinkedin, href: "https://www.linkedin.com/in/jigar-sable/", label: "LinkedIn", hover: "hover:bg-[#007bb6]" },
@@ -76,6 +77,7 @@ export default function Hero() {
       </section>
       <About />
       <Skills />
+      <Education />
     </>
   );
 }
