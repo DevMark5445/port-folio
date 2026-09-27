@@ -1,8 +1,8 @@
 
 import { useState } from "react";
-import { FaNodeJs, FaBars, FaTimes } from "react-icons/fa";
+import { FaBars, FaMoon, FaSun, FaTimes } from "react-icons/fa";
 
-const Navbar = () => {
+const Navbar = ({ isDarkMode, onToggleTheme }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const navItems = [
@@ -30,7 +30,6 @@ const Navbar = () => {
           className="flex items-center gap-2 text-2xl font-bold text-gray-900 transition-colors duration-300 hover:text-blue-600"
           aria-label="Marktech - Home"
         >
-          <FaNodeJs className="text-blue-600" />
           <span>Marktech</span>
         </a>
 
@@ -59,17 +58,29 @@ const Navbar = () => {
           </ul>
         </nav>
 
-        {/* Mobile Menu Button */}
-        <button
-          type="button"
-          onClick={() => setIsOpen((prev) => !prev)}
-          className="rounded-lg p-2 text-2xl text-gray-800 transition-colors hover:bg-gray-100 hover:text-blue-600 md:hidden"
-          aria-label={isOpen ? "Close navigation menu" : "Open navigation menu"}
-          aria-expanded={isOpen}
-          aria-controls="mobile-navigation"
-        >
-          {isOpen ? <FaTimes /> : <FaBars />}
-        </button>
+        <div className="flex items-center gap-1">
+          <button
+            type="button"
+            onClick={onToggleTheme}
+            className="flex h-10 w-10 items-center justify-center rounded-full text-lg text-gray-800 transition-colors hover:bg-gray-100 hover:text-blue-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
+            aria-label={`Switch to ${isDarkMode ? "light" : "dark"} mode`}
+            aria-pressed={isDarkMode}
+            title={`Switch to ${isDarkMode ? "light" : "dark"} mode`}
+          >
+            {isDarkMode ? <FaSun /> : <FaMoon />}
+          </button>
+
+          <button
+            type="button"
+            onClick={() => setIsOpen((prev) => !prev)}
+            className="rounded-lg p-2 text-2xl text-gray-800 transition-colors hover:bg-gray-100 hover:text-blue-600 md:hidden"
+            aria-label={isOpen ? "Close navigation menu" : "Open navigation menu"}
+            aria-expanded={isOpen}
+            aria-controls="mobile-navigation"
+          >
+            {isOpen ? <FaTimes /> : <FaBars />}
+          </button>
+        </div>
       </div>
 
       {/* Mobile Navigation */}

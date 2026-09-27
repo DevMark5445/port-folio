@@ -3,6 +3,47 @@ html {
   scroll-behavior: smooth;
   scroll-padding-top: 4rem;
 }
+.App {
+  min-height: 100vh;
+  background-color: #fff;
+  color: #172033;
+  transition: background-color 250ms ease, color 250ms ease;
+}
+.App[data-theme="dark"] {
+  color-scheme: dark;
+  background-color: #0b1220;
+  color: #e2e8f0;
+}
+.App[data-theme="dark"] .bg-white,
+.App[data-theme="dark"] header {
+  background-color: #111c2b;
+}
+.App[data-theme="dark"] [class~="bg-white/80"] {
+  background-color: rgb(17 28 43 / 92%);
+}
+.App[data-theme="dark"] .bg-blue-50 {
+  background-color: #142333;
+}
+.App[data-theme="dark"] .bg-slate-50 {
+  background-color: #172333;
+}
+.App[data-theme="dark"] .border-slate-200 {
+  border-color: #334155;
+}
+.App[data-theme="dark"] .text-gray-900,
+.App[data-theme="dark"] .text-gray-800,
+.App[data-theme="dark"] .text-gray-700,
+.App[data-theme="dark"] .text-slate-700,
+.App[data-theme="dark"] .text-navy-950,
+.App[data-theme="dark"] .text-navy-deep,
+.App[data-theme="dark"] .text-navy-800,
+.App[data-theme="dark"] .text-navy-600 {
+  color: #e2e8f0;
+}
+.App[data-theme="dark"] .hover\:bg-gray-100:hover,
+.App[data-theme="dark"] .hover\:bg-gray-50:hover {
+  background-color: #263548;
+}
 /* navbar starts */
 header {
   position: fixed;
@@ -21,6 +62,32 @@ header {
 section {
   min-height: 100vh;
   padding: 2rem 9%;
+}
+.home-page > section {
+  opacity: 0;
+  transform: translateY(32px);
+  transition: opacity 650ms ease, transform 650ms ease;
+}
+.home-page > section.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.skills-heading,
+.skills-content {
+  opacity: 0;
+  transition: opacity 600ms ease, transform 600ms ease;
+}
+.skills-heading {
+  transform: translateX(-36px);
+}
+.skills-content {
+  transform: translateX(36px);
+  transition-delay: 100ms;
+}
+.home-page > #skills.is-visible .skills-heading,
+.home-page > #skills.is-visible .skills-content {
+  opacity: 1;
+  transform: translateX(0);
 }
 .particle-field {
   overflow: hidden;
@@ -73,6 +140,17 @@ section {
   }
 }
 @media (prefers-reduced-motion: reduce) {
+  .home-page > section {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  .skills-heading,
+  .skills-content {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
   .molecule-node {
     animation: none;
   }

@@ -1,4 +1,5 @@
 import { FaLinkedin, FaGithub, FaTwitter, FaTelegramPlane, FaInstagram, FaDev, FaArrowCircleDown, FaCode, FaEnvelope, FaPaperPlane } from "react-icons/fa";
+import { useEffect, useRef } from "react";
 import { useTypewriter } from "../hooks/useTypewriter";
 import ParticleBackground from "./Particle";
 import About from "./About";
@@ -17,9 +18,27 @@ const socials = [
 
 export default function Hero() {
   const typed = useTypewriter(["Web Development", "Cyber Security", "Ethical Hacking", "UI/UX Design", "Problem Solving"]);
+  const pageRef = useRef(null);
+
+  useEffect(() => {
+    const sections = pageRef.current?.querySelectorAll(":scope > section");
+    if (!sections?.length) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          entry.target.classList.toggle("is-visible", entry.isIntersecting);
+        });
+      },
+      { threshold: 0.12, rootMargin: "0px 0px -40px 0px" }
+    );
+
+    sections.forEach((section) => observer.observe(section));
+    return () => observer.disconnect();
+  }, []);
 
   return (
-    <>
+    <div ref={pageRef} className="home-page">
       <section id="home" className="relative flex min-h-screen items-center overflow-hidden bg-white">
       <div aria-hidden className="particle-field pointer-events-none absolute inset-0">
         <ParticleBackground color="37, 99, 235" count={180} maxDistance={140} speed={0.35} />
@@ -139,6 +158,6 @@ export default function Hero() {
           </ul>
         </div>
       </section>
-    </>
+    </div>
   );
 }
