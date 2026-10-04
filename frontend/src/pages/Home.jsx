@@ -87,10 +87,7 @@ export default function Hero() {
 
         <div className="mx-auto flex justify-center lg:justify-end">
           <img
-            draggable="false"
-            className="w-[70%] max-w-sm cursor-pointer rounded-full shadow-[0_2px_8px_rgba(0,0,0,0.3)] transition-shadow hover:shadow-[0_5px_15px_rgba(0,0,0,0.5)] lg:w-full"
-            src="/images/hero.png"
-            alt="Illustration of Jigar Sable"
+           
           />
         </div>
       </div>

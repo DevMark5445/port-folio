@@ -30,7 +30,7 @@ const Navbar = ({ isDarkMode, onToggleTheme }) => {
           className="flex items-center gap-2 text-2xl font-bold text-gray-900 transition-colors duration-300 hover:text-blue-600"
           aria-label="Marktech - Home"
         >
-          <span>Marktech</span>
+          <span>MarkTech</span>
         </a>
 
         {/* Desktop Navigation */}

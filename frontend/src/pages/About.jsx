@@ -10,10 +10,7 @@ export default function About() {
       <div className="mx-auto mt-12 flex max-w-6xl flex-wrap items-center gap-10 px-6 sm:px-10">
         <div className="mx-auto flex-1 basis-80 text-center">
           <img
-            draggable="false"
-            className="mx-auto w-4/5 max-w-sm rounded-2xl shadow-[0_5px_10px_rgba(0,0,0,0.6)] mix-blend-luminosity transition duration-300 hover:mix-blend-normal sm:w-full"
-            src="/images/profile2.jpg"
-            alt="Jigar Sable"
+           
           />
         </div>
 
@@ -25,7 +22,7 @@ export default function About() {
 
           <p className="mt-6 font-body text-lg font-semibold leading-relaxed text-navy-800">
             I am a Full-Stack developer based in Nairobi, Kenya. I am an Information Technology
-            undergraduate from Kabete National Polytechnic. I am very passionate about improving my coding skills &amp;
+            undergraduate from Kabete National Polytechnic and Institute of Software Development. I am very passionate about improving my coding skills &amp;
             developing applications &amp; websites. I build  Websites and Web Applications using the MERN (MongoDB, Express.js, React.js, Node.js) Stack. I am a Full-Stack Developer with a strong foundation in both front-end and back-end development. I have experience working with the MERN
             Stack — and I love building full-stack clones to sharpen my craft.
           </p>

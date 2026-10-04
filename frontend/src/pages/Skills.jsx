@@ -8,7 +8,7 @@ export default function Skills() {
         <FaLaptopCode className="text-indigo-600" /> My <span className="text-orange-500">Skills</span>
       </h2>
 
-      <div className="skills-content mx-auto mt-10 w-[92%] max-w-6xl rounded-2xl bg-white/80 p-6 shadow-lg shadow-blue-100 sm:p-10">
+      <div className="skills-content mx-auto mt-10 w-[92%] max-w-6xl rounded-2xl bg-white/80 p-6 sm:p-10">
         <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
           {skills.map(({ name, icon: Icon, color }) => (
             <div
