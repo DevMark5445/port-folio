@@ -13,10 +13,10 @@ export default function Skills() {
           {skills.map(({ name, icon: Icon, color }) => (
             <div
               key={name}
-              className="flex flex-col items-center gap-3 rounded-2xl bg-navy-800/90 p-4 shadow-md transition duration-200 hover:bg-black hover:shadow-[0_8px_10px_rgba(0,2,68,0.8)]"
+              className="skill-card flex min-h-32 flex-col items-center justify-center gap-3 rounded-2xl bg-navy-800/90 p-4 shadow-md transition duration-200 hover:bg-black hover:shadow-[0_8px_10px_rgba(0,2,68,0.8)]"
             >
               <Icon className="text-5xl" style={{ color }} />
-              <span className="text-center font-display text-sm font-medium text-white sm:text-base">
+              <span className="skill-name text-center font-display text-lg font-bold leading-tight text-black drop-shadow-sm sm:text-xl">
                 {name}
               </span>
             </div>

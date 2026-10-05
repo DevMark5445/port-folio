@@ -40,6 +40,12 @@ html {
 .App[data-theme="dark"] .text-navy-600 {
   color: #e2e8f0;
 }
+.App[data-theme="dark"] .skill-name {
+  color: #fff;
+}
+.skill-card:hover .skill-name {
+  color: #fff;
+}
 .App[data-theme="dark"] .hover\:bg-gray-100:hover,
 .App[data-theme="dark"] .hover\:bg-gray-50:hover {
   background-color: #263548;

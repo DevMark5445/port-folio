@@ -7,7 +7,13 @@ import {
   FaNodeJs,
   FaReact,
 } from "react-icons/fa";
-import { SiExpress, SiMongodb, SiTailwindcss } from "react-icons/si";
+import {
+  SiCisco,
+  SiExpress,
+  SiKalilinux,
+  SiMongodb,
+  SiTailwindcss,
+} from "react-icons/si";
 
 export const skills = [
   { name: "HTML", icon: FaHtml5, color: "#e34f26" },
@@ -20,4 +26,6 @@ export const skills = [
   { name: "Tailwind CSS", icon: SiTailwindcss, color: "#38bdf8" },
   { name: "Database", icon: FaDatabase, color: "#4db33d" },
   { name: "Git", icon: FaGitAlt, color: "#f05032" },
+  { name: "Kali Linux", icon: SiKalilinux, color: "#557c94" },
+  { name: "Cisco Packet Tracer", icon: SiCisco, color: "#1ba0d7" },
 ];

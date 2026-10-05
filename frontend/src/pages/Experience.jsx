@@ -3,41 +3,54 @@ import { experience } from "../data/experience";
 
 export default function Experience() {
   return (
-    <section id="experience" className="bg-white py-20">
+    <section id="experience" className="bg-[#f7f7f7] py-20">
       <h2 className="flex items-center justify-center gap-3 font-display text-3xl font-bold text-navy-950 sm:text-4xl">
-        <FaBriefcase className="text-orange-600" /> Experience
+        <FaBriefcase className="text-navy-950" /> Experience
       </h2>
 
-      <div className="relative mx-auto mt-14 max-w-5xl px-6 sm:px-10">
-        {/* vertical line: left-aligned on mobile, centered on sm+ */}
-        <div className="absolute left-8 top-0 bottom-0 w-1 bg-navy-600 sm:left-1/2 sm:-translate-x-1/2" />
+      <div className="mx-auto mt-14 max-w-5xl px-6 sm:px-10">
+        <div className="relative">
+          {/* vertical line: left on mobile, centered on sm+ */}
+          <div className="absolute bottom-0 left-6 top-0 w-1 -translate-x-1/2 rounded bg-[#05053a] sm:left-1/2" />
 
-        <ul className="flex flex-col gap-8">
-          {experience.map(({ company, role, period }, i) => {
-            const onRight = i % 2 === 0;
-            return (
-              <li
-                key={`${company}-${role}`}
-                className={`relative flex w-full pl-20 sm:w-1/2 sm:pl-0 sm:pr-10 ${
-                  onRight ? "sm:ml-auto sm:pl-10 sm:pr-0" : ""
-                }`}
-              >
-                {/* dot */}
-                <span
-                  className={`absolute top-4 z-10 flex h-7 w-7 items-center justify-center rounded-full border-4 border-orange-600 bg-white left-4 sm:left-auto ${
-                    onRight ? "sm:-left-3.5" : "sm:-right-3.5"
+          <ul className="flex flex-col gap-8">
+            {experience.map(({ company, role, period }, i) => {
+              const onRight = i % 2 === 0;
+              return (
+                <li
+                  key={`${company}-${role}-${period}`}
+                  className={`relative w-full pl-16 sm:w-1/2 ${
+                    onRight ? "sm:ml-auto sm:pl-12" : "sm:pl-0 sm:pr-12"
                   }`}
-                  aria-hidden
-                />
-                <div className="w-full rounded-lg bg-orange-600 px-6 py-5">
-                  <p className="text-sm font-semibold text-white/90">{company}</p>
-                  <h3 className="mt-1 text-lg font-semibold text-navy-950">{role}</h3>
-                  <p className="mt-1 text-sm text-navy-800">{period}</p>
-                </div>
-              </li>
-            );
-          })}
-        </ul>
+                >
+                  {/* node: orange ring, white fill, navy briefcase */}
+                  <span
+                    aria-hidden
+                    className={`absolute left-6 top-1/2 z-10 flex h-9 w-9 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border-[3px] border-[#fb9a4b] bg-white text-sm text-[#05053a] ${
+                      onRight ? "sm:left-0" : "sm:left-full"
+                    }`}
+                  >
+                    <FaBriefcase />
+                  </span>
+
+                  {/* orange card with pointer arrow */}
+                  <div
+                    className={`relative rounded-md bg-[#f98d0a] px-4 py-3 text-black shadow-sm
+                      before:absolute before:top-1/2 before:-left-4 before:-translate-y-1/2 before:border-8 before:border-transparent before:border-r-[#f98d0a] ${
+                        onRight
+                          ? ""
+                          : "sm:before:-right-4 sm:before:left-auto sm:before:border-r-transparent sm:before:border-l-[#f98d0a]"
+                      }`}
+                  >
+                    <h3 className="font-display text-xl font-bold">{company}</h3>
+                    <p className="mt-0.5 font-display text-base font-semibold">{role}</p>
+                    <p className="mt-0.5 font-display text-xs">{period}</p>
+                  </div>
+                </li>
+              );
+            })}
+          </ul>
+        </div>
       </div>
 
       <div className="mt-14 flex justify-center">
