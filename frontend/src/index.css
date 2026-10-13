@@ -24,6 +24,30 @@ html {
 .App[data-theme="dark"] .bg-blue-50 {
   background-color: #142333;
 }
+.App[data-theme="dark"] #experience {
+  background-color: #142333;
+}
+.App[data-theme="dark"] #experience .experience-timeline {
+  background-color: #64748b;
+}
+.App[data-theme="dark"] #experience .experience-marker {
+  background-color: #111c2b;
+  color: #e2e8f0;
+}
+.skill-floating-icon {
+  animation: skill-icon-float 2.8s ease-in-out infinite;
+}
+.skill-card:nth-child(2n) .skill-floating-icon {
+  animation-delay: 1.4s;
+}
+@keyframes skill-icon-float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-4px);
+  }
+}
 .App[data-theme="dark"] .bg-slate-50 {
   background-color: #172333;
 }
@@ -33,6 +57,7 @@ html {
 .App[data-theme="dark"] .text-gray-900,
 .App[data-theme="dark"] .text-gray-800,
 .App[data-theme="dark"] .text-gray-700,
+.App[data-theme="dark"] .text-slate-800,
 .App[data-theme="dark"] .text-slate-700,
 .App[data-theme="dark"] .text-navy-950,
 .App[data-theme="dark"] .text-navy-deep,
@@ -162,6 +187,9 @@ section {
   }
   .molecule-network,
   .constellation {
+    animation: none;
+  }
+  .skill-floating-icon {
     animation: none;
   }
 }

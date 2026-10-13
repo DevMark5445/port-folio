@@ -1,6 +1,7 @@
-import { FaLinkedin, FaGithub, FaTwitter, FaTelegramPlane, FaInstagram, FaDev, FaArrowCircleDown, FaCode, FaEnvelope, FaPaperPlane } from "react-icons/fa";
+import { FaLinkedin, FaGithub, FaTwitter, FaTelegramPlane, FaInstagram, FaDev, FaArrowCircleDown, FaCode, FaEnvelope, FaPaperPlane, FaExternalLinkAlt } from "react-icons/fa";
 import { useEffect, useRef } from "react";
 import { useTypewriter } from "../hooks/useTypewriter";
+import { projects } from "../data/projects";
 import ParticleBackground from "./Particle";
 import About from "./About";
 import Skills from "./Skills";
@@ -9,7 +10,7 @@ import Experience from "./Experience";
 
 const socials = [
   { icon: FaLinkedin, href: "https://www.linkedin.com/in/jigar-sable/", label: "LinkedIn", hover: "hover:bg-[#007bb6]" },
-  { icon: FaGithub, href: "https://github.com/jigar-sable", label: "GitHub", hover: "hover:bg-[#0e0e0e]" },
+  { icon: FaGithub, href: "https://github.com/DevMark5445", label: "GitHub", hover: "hover:bg-[#0e0e0e]" },
   { icon: FaTwitter, href: "https://twitter.com/jigar_sable", label: "Twitter", hover: "hover:bg-[#00aced]" },
   { icon: FaTelegramPlane, href: "https://t.me/lifecode5", label: "Telegram", hover: "hover:bg-[#0685da]" },
   { icon: FaInstagram, href: "https://www.instagram.com/jigarsable.dev", label: "Instagram", hover: "hover:bg-[#ee00da]" },
@@ -100,19 +101,29 @@ export default function Hero() {
       <section id="work" className="bg-white py-20">
         <div className="mx-auto max-w-6xl px-6 sm:px-10">
           <h2 className="flex items-center justify-center gap-3 font-display text-3xl font-bold text-navy-950 sm:text-4xl">
-            <FaCode className="text-orange-500" /> Featured <span className="text-orange-500">Work</span>
+            <FaCode className="text-orange-500" /> My <span className="text-orange-500">Projects</span>
           </h2>
 
-          <div className="mt-10 grid gap-6 md:grid-cols-3">
-            {[
-              { title: "Web App Development", text: "Modern front-end and full-stack interfaces built for performance, responsiveness, and a polished user experience." },
-              { title: "Business Solutions", text: "Custom digital products designed to improve workflows, user engagement, and business growth." },
-              { title: "UI/UX Craft", text: "Clean interfaces and conversion-focused design systems tailored to product goals and audience needs." },
-            ].map((item) => (
-              <div key={item.title} className="rounded-2xl border border-slate-200 bg-slate-50 p-6 shadow-sm transition duration-200 hover:-translate-y-1 hover:shadow-lg">
-                <h3 className="text-xl font-bold text-navy-950">{item.title}</h3>
-                <p className="mt-3 text-base leading-relaxed text-slate-700">{item.text}</p>
-              </div>
+          <div className="mt-10 grid gap-6 sm:grid-cols-2">
+            {projects.map(({ title, category, description, image, imageAlt, repositoryUrl, liveUrl }) => (
+              <article key={title} className="overflow-hidden rounded-lg border border-slate-200 bg-slate-50 shadow-sm transition duration-200 hover:-translate-y-1 hover:shadow-lg">
+                <img src={image} alt={imageAlt} loading="lazy" className="aspect-video w-full object-cover" />
+                <div className="flex min-h-56 flex-col p-6">
+                  <h3 className="font-display text-xl font-bold text-navy-950">{title}</h3>
+                  <p className="mt-2 text-sm font-semibold uppercase tracking-wide text-orange-600">{category}</p>
+                  <p className="mt-3 flex-1 text-base leading-relaxed text-slate-700">{description}</p>
+                  <div className="mt-6 flex flex-wrap gap-3">
+                    {liveUrl && (
+                      <a href={liveUrl} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 rounded-md bg-orange-500 px-4 py-2 text-sm font-semibold text-white transition hover:bg-orange-600">
+                        View live <FaExternalLinkAlt aria-hidden="true" />
+                      </a>
+                    )}
+                    <a href={repositoryUrl} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 rounded-md border border-slate-300 px-4 py-2 text-sm font-semibold text-navy-950 transition hover:border-orange-500 hover:text-orange-600">
+                      <FaGithub aria-hidden="true" /> Source code
+                    </a>
+                  </div>
+                </div>
+              </article>
             ))}
           </div>
         </div>

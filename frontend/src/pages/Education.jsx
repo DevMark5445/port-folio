@@ -9,12 +9,13 @@ export default function Education() {
       </h2>
 
       <div className="mx-auto mt-10 grid max-w-6xl gap-6 px-6 sm:grid-cols-2 sm:px-10">
-        {education.map(({ title, school, period, image }) => (
+        {education.map(({ title, institution, school, period, image }) => (
           <article key={title} className="overflow-hidden rounded-lg bg-white shadow-sm">
             <img src={image} alt="" className="aspect-video w-full object-cover" />
             <div className="p-6">
               <h3 className="font-display text-xl font-bold text-navy-950">{title}</h3>
-              <p className="mt-2 text-slate-700">{school}</p>
+              <p className="mt-2 font-semibold text-slate-800">{institution}</p>
+              <p className="mt-1 text-slate-700">{school}</p>
               <p className="mt-1 text-sm font-semibold text-orange-600">{period}</p>
             </div>
           </article>

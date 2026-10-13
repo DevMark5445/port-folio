@@ -10,7 +10,7 @@ const Navbar = ({ isDarkMode, onToggleTheme }) => {
     { name: "About", href: "#about" },
     { name: "Skills", href: "#skills" },
     { name: "Education", href: "#education" },
-    { name: "Work", href: "#work" },
+    { name: "Projects", href: "#work" },
     { name: "Experience", href: "#experience" },
     { name: "Contact", href: "#contact" },
   ];
