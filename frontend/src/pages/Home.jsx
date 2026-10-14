@@ -1,5 +1,5 @@
 import { FaLinkedin, FaGithub, FaTwitter, FaTelegramPlane, FaInstagram, FaDev, FaArrowCircleDown, FaCode, FaEnvelope, FaPaperPlane, FaExternalLinkAlt } from "react-icons/fa";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useTypewriter } from "../hooks/useTypewriter";
 import { projects } from "../data/projects";
 import ParticleBackground from "./Particle";
@@ -7,6 +7,7 @@ import About from "./About";
 import Skills from "./Skills";
 import Education from "./Education";
 import Experience from "./Experience";
+import { supabase } from "../lib/supabase";
 
 const socials = [
   { icon: FaLinkedin, href: "https://www.linkedin.com/in/jigar-sable/", label: "LinkedIn", hover: "hover:bg-[#007bb6]" },
@@ -20,6 +21,49 @@ const socials = [
 export default function Hero() {
   const typed = useTypewriter(["Web Development", "Cyber Security", "Ethical Hacking", "UI/UX Design", "Problem Solving"]);
   const pageRef = useRef(null);
+  const [projectItems, setProjectItems] = useState(supabase ? [] : projects);
+  const [projectError, setProjectError] = useState("");
+  const [projectsLoading, setProjectsLoading] = useState(Boolean(supabase));
+
+  useEffect(() => {
+    if (!supabase) return undefined;
+
+    let active = true;
+    const loadProjects = async () => {
+      const { data, error } = await supabase
+        .from("projects")
+        .select("id, title, category, description, image_url, image_alt, repository_url, live_url")
+        .order("sort_order", { ascending: true })
+        .order("created_at", { ascending: false });
+
+      if (!active) return;
+      if (error) {
+        setProjectError(`Projects could not be loaded: ${error.message}`);
+        setProjectsLoading(false);
+        return;
+      }
+
+      setProjectError("");
+      setProjectsLoading(false);
+      setProjectItems(data.map((project) => ({
+        id: project.id,
+        title: project.title,
+        category: project.category,
+        description: project.description,
+        image: project.image_url,
+        imageAlt: project.image_alt || "",
+        repositoryUrl: project.repository_url,
+        liveUrl: project.live_url,
+      })));
+    };
+
+    loadProjects();
+    const refreshInterval = window.setInterval(loadProjects, 60000);
+    return () => {
+      active = false;
+      window.clearInterval(refreshInterval);
+    };
+  }, []);
 
   useEffect(() => {
     const sections = pageRef.current?.querySelectorAll(":scope > section");
@@ -105,9 +149,10 @@ export default function Hero() {
           </h2>
 
           <div className="mt-10 grid gap-6 sm:grid-cols-2">
-            {projects.map(({ title, category, description, image, imageAlt, repositoryUrl, liveUrl }) => (
-              <article key={title} className="overflow-hidden rounded-lg border border-slate-200 bg-slate-50 shadow-sm transition duration-200 hover:-translate-y-1 hover:shadow-lg">
-                <img src={image} alt={imageAlt} loading="lazy" className="aspect-video w-full object-cover" />
+            {projectError && <p role="alert" className="sm:col-span-2 rounded-md bg-red-50 p-4 text-center text-red-800">{projectError}</p>}
+            {projectItems.map(({ id, title, category, description, image, imageAlt, repositoryUrl, liveUrl }) => (
+              <article key={id || title} className="overflow-hidden rounded-lg border border-slate-200 bg-slate-50 shadow-sm transition duration-200 hover:-translate-y-1 hover:shadow-lg">
+                {image && <img src={image} alt={imageAlt} loading="lazy" className="aspect-video w-full object-cover" />}
                 <div className="flex min-h-56 flex-col p-6">
                   <h3 className="font-display text-xl font-bold text-navy-950">{title}</h3>
                   <p className="mt-2 text-sm font-semibold uppercase tracking-wide text-orange-600">{category}</p>
@@ -118,14 +163,21 @@ export default function Hero() {
                         View live <FaExternalLinkAlt aria-hidden="true" />
                       </a>
                     )}
-                    <a href={repositoryUrl} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 rounded-md border border-slate-300 px-4 py-2 text-sm font-semibold text-navy-950 transition hover:border-orange-500 hover:text-orange-600">
-                      <FaGithub aria-hidden="true" /> Source code
-                    </a>
+                    {repositoryUrl && (
+                      <a href={repositoryUrl} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 rounded-md border border-slate-300 px-4 py-2 text-sm font-semibold text-navy-950 transition hover:border-orange-500 hover:text-orange-600">
+                        <FaGithub aria-hidden="true" /> Source code
+                      </a>
+                    )}
                   </div>
                 </div>
               </article>
             ))}
           </div>
+          {!projectError && projectItems.length === 0 && (
+            <p className="mt-10 text-center text-slate-600">
+              {projectsLoading ? "Loading projects..." : "Projects are being added. Please check back soon."}
+            </p>
+          )}
         </div>
       </section>
 

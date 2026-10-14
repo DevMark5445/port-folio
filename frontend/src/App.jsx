@@ -5,12 +5,13 @@ import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import Home from './pages/Home';
 import Particle from './pages/Particle';
+import Admin from './pages/Admin';
 
 
 function AppContent({ isDarkMode, onToggleTheme }) {
   const location = useLocation();
 
-  const hideNavbarRoutes = ['/login', '/register', '/dashboard', '/medication', '/appoint'];
+  const hideNavbarRoutes = ['/login', '/register', '/dashboard', '/medication', '/appoint', '/admin'];
 
   return (
     <>
@@ -20,6 +21,7 @@ function AppContent({ isDarkMode, onToggleTheme }) {
       <main>
         <Routes>
           <Route path='/' element={<Home />} />
+          <Route path='/admin' element={<Admin />} />
           <Route path='/particle' element={<Particle />} />
           <Route path='/about' element={<Navigate to='/#about' replace />} />
           <Route path='*' element={<Navigate to='/' replace />} />

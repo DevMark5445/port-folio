@@ -1,6 +1,7 @@
 
 import { useState } from "react";
 import { FaBars, FaMoon, FaSun, FaTimes } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 const Navbar = ({ isDarkMode, onToggleTheme }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -59,6 +60,13 @@ const Navbar = ({ isDarkMode, onToggleTheme }) => {
         </nav>
 
         <div className="flex items-center gap-1">
+          <Link
+            to="/admin"
+            className="rounded-md border border-indigo-600 px-3 py-2 text-sm font-semibold text-indigo-700 transition-colors hover:bg-indigo-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+          >
+            Admin
+          </Link>
+
           <button
             type="button"
             onClick={onToggleTheme}
@@ -107,6 +115,15 @@ const Navbar = ({ isDarkMode, onToggleTheme }) => {
               </a>
             </li>
           ))}
+          <li>
+            <Link
+              to="/admin"
+              onClick={closeMenu}
+              className="block rounded-lg bg-indigo-50 px-4 py-3 text-base font-semibold text-indigo-700 transition-colors hover:bg-indigo-100"
+            >
+              Admin sign in
+            </Link>
+          </li>
         </ul>
       </nav>
     </header>
@@ -114,4 +131,3 @@ const Navbar = ({ isDarkMode, onToggleTheme }) => {
 };
 
 export default Navbar;
-
