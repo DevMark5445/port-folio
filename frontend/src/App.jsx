@@ -6,12 +6,14 @@ import Footer from './components/Footer';
 import Home from './pages/Home';
 import Particle from './pages/Particle';
 import Admin from './pages/Admin';
+import AdminSignup from './pages/AdminSignup';
+import AdminLogin from './pages/AdminLogin';
 
 
 function AppContent({ isDarkMode, onToggleTheme }) {
   const location = useLocation();
 
-  const hideNavbarRoutes = ['/login', '/register', '/dashboard', '/medication', '/appoint', '/admin'];
+  const hideNavbarRoutes = ['/login', '/register', '/signup', '/dashboard', '/medication', '/appoint', '/admin'];
 
   return (
     <>
@@ -22,6 +24,8 @@ function AppContent({ isDarkMode, onToggleTheme }) {
         <Routes>
           <Route path='/' element={<Home />} />
           <Route path='/admin' element={<Admin />} />
+          <Route path='/signup' element={<AdminSignup />} />
+          <Route path='/login' element={<AdminLogin />} />
           <Route path='/particle' element={<Particle />} />
           <Route path='/about' element={<Navigate to='/#about' replace />} />
           <Route path='*' element={<Navigate to='/' replace />} />

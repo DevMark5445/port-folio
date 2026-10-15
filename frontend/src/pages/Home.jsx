@@ -1,13 +1,13 @@
 import { FaLinkedin, FaGithub, FaTwitter, FaTelegramPlane, FaInstagram, FaDev, FaArrowCircleDown, FaCode, FaEnvelope, FaPaperPlane, FaExternalLinkAlt } from "react-icons/fa";
 import { useEffect, useRef, useState } from "react";
 import { useTypewriter } from "../hooks/useTypewriter";
-import { projects } from "../data/projects";
+import { projects as fallbackProjects } from "../data/projects";
+import api from "../lib/api";
 import ParticleBackground from "./Particle";
 import About from "./About";
 import Skills from "./Skills";
 import Education from "./Education";
 import Experience from "./Experience";
-import { supabase } from "../lib/supabase";
 
 const socials = [
   { icon: FaLinkedin, href: "https://www.linkedin.com/in/jigar-sable/", label: "LinkedIn", hover: "hover:bg-[#007bb6]" },
@@ -21,40 +21,35 @@ const socials = [
 export default function Hero() {
   const typed = useTypewriter(["Web Development", "Cyber Security", "Ethical Hacking", "UI/UX Design", "Problem Solving"]);
   const pageRef = useRef(null);
-  const [projectItems, setProjectItems] = useState(supabase ? [] : projects);
+  const [projectItems, setProjectItems] = useState(fallbackProjects);
   const [projectError, setProjectError] = useState("");
-  const [projectsLoading, setProjectsLoading] = useState(Boolean(supabase));
+  const [projectsLoading, setProjectsLoading] = useState(true);
 
   useEffect(() => {
-    if (!supabase) return undefined;
-
     let active = true;
     const loadProjects = async () => {
-      const { data, error } = await supabase
-        .from("projects")
-        .select("id, title, category, description, image_url, image_alt, repository_url, live_url")
-        .order("sort_order", { ascending: true })
-        .order("created_at", { ascending: false });
-
-      if (!active) return;
-      if (error) {
-        setProjectError(`Projects could not be loaded: ${error.message}`);
-        setProjectsLoading(false);
-        return;
+      try {
+        const data = await api.getProjects();
+        if (!active) return;
+        setProjectError("");
+        setProjectItems(
+          data.map((project) => ({
+            id: project.id,
+            title: project.title,
+            category: project.category,
+            description: project.description,
+            image: project.image_url,
+            imageAlt: project.image_alt || "",
+            repositoryUrl: project.repository_url,
+            liveUrl: project.live_url,
+          }))
+        );
+      } catch (err) {
+        if (!active) return;
+        setProjectError(`Projects could not be loaded: ${err.message}`);
+      } finally {
+        if (active) setProjectsLoading(false);
       }
-
-      setProjectError("");
-      setProjectsLoading(false);
-      setProjectItems(data.map((project) => ({
-        id: project.id,
-        title: project.title,
-        category: project.category,
-        description: project.description,
-        image: project.image_url,
-        imageAlt: project.image_alt || "",
-        repositoryUrl: project.repository_url,
-        liveUrl: project.live_url,
-      })));
     };
 
     loadProjects();
