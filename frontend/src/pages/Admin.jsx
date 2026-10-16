@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import { FaGithub, FaSignOutAlt, FaTrash, FaEdit, FaRedo } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import api from "../lib/api";
 
 const emptyForm = {
@@ -14,6 +14,7 @@ const emptyForm = {
 };
 
 export default function Admin() {
+  const navigate = useNavigate();
   const [session, setSession] = useState(null);
   const [isAdmin, setIsAdmin] = useState(false);
   const [accessChecked, setAccessChecked] = useState(false);
@@ -107,6 +108,7 @@ export default function Admin() {
     setEditingId(null);
     setError("");
     setMessage("");
+    navigate("/", { replace: true });
   };
 
   const importGithubDetails = async () => {
