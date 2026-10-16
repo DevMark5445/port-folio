@@ -7,8 +7,6 @@ const emptyForm = {
   title: "",
   category: "",
   description: "",
-  image_url: "",
-  image_alt: "",
   repository_url: "",
   live_url: "",
 };
@@ -131,9 +129,7 @@ export default function Admin() {
         description: current.description || repository.description || "",
         repository_url: repository.html_url,
       }));
-      setMessage(
-        "GitHub repository details imported. Add a Vercel URL and image if you want, then save."
-      );
+      setMessage("GitHub repository details imported. Add a live URL if you want, then save.");
     } catch (importError) {
       setError(`Could not import GitHub details: ${importError.message}`);
     } finally {
@@ -145,9 +141,6 @@ export default function Admin() {
     setForm({
       title: project.title,
       category: project.category,
-      description: project.description,
-      image_url: project.image_url || "",
-      image_alt: project.image_alt || "",
       repository_url: project.repository_url || "",
       live_url: project.live_url || "",
     });
@@ -171,9 +164,6 @@ export default function Admin() {
     const projectData = {
       title: form.title.trim(),
       category: form.category.trim(),
-      description: form.description.trim(),
-      image_url: form.image_url.trim() || null,
-      image_alt: form.image_alt.trim() || null,
       repository_url: form.repository_url.trim() || null,
       live_url: form.live_url.trim() || null,
     };
@@ -393,24 +383,6 @@ export default function Admin() {
             onChange={(event) => setForm({ ...form, live_url: event.target.value })}
             className="mt-1 w-full rounded-md border border-slate-300 px-3 py-2"
             placeholder="https://your-project.vercel.app"
-          />
-        </label>
-        <label className="font-semibold text-slate-800 sm:col-span-2">
-          Preview image URL (optional)
-          <input
-            value={form.image_url}
-            onChange={(event) => setForm({ ...form, image_url: event.target.value })}
-            className="mt-1 w-full rounded-md border border-slate-300 px-3 py-2"
-            placeholder="https://... or /projects/image.png"
-          />
-        </label>
-        <label className="font-semibold text-slate-800 sm:col-span-2">
-          Preview image description (optional)
-          <input
-            maxLength={250}
-            value={form.image_alt}
-            onChange={(event) => setForm({ ...form, image_alt: event.target.value })}
-            className="mt-1 w-full rounded-md border border-slate-300 px-3 py-2"
           />
         </label>
         <div className="flex flex-wrap gap-3 sm:col-span-2">
