@@ -15,9 +15,10 @@ code.
    npm start
    ```
 
-2. The frontend uses `http://localhost:5000/api` by default. For production,
-   set `VITE_API_BASE` in the frontend environment to the backend's `/api` URL.
-   A local development example is in `.env.example`.
+2. The frontend uses `http://localhost:5000/api` in development. Production
+   builds use the backend URL in `.env.production`; update `VITE_API_BASE` there
+   if the deployed API URL changes. You can instead set `VITE_API_BASE` in the
+   frontend hosting environment.
 
 3. Open `/signup` to create the sole administrator account. The page is
    available only until the first account is created. After setup, registration
