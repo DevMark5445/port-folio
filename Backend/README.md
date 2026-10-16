@@ -14,7 +14,7 @@ Express API for the portfolio admin panel. MongoDB stores the administrator acco
    npm run dev
    ```
 
-By default the API listens on `http://localhost:5000`, even if MongoDB is unavailable. In that state, `/api/health` and database-backed routes return `503`; the backend retries the MongoDB connection with increasing delays (up to one minute) and administrator setup and authentication become available once the connection succeeds. Configure `FRONTEND_ORIGIN` with the frontend's origin in production; multiple comma-separated origins are supported. Set `GITHUB_TOKEN` if you need a higher GitHub API rate limit; public repositories work without it.
+By default the API listens on `http://localhost:5000`, even if MongoDB is unavailable. In that state, `/api/health` and database-backed routes return `503`; the backend retries the MongoDB connection with increasing delays (up to one minute) and administrator setup and authentication become available once the connection succeeds. CORS allows the local frontend and `https://port-folio-indol-nine.vercel.app` by default. Configure `FRONTEND_ORIGIN` in the backend hosting environment to add other frontend origins; multiple comma-separated origins are supported. Set `GITHUB_TOKEN` if you need a higher GitHub API rate limit; public repositories work without it.
 
 ## API routes
 
