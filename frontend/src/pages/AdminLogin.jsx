@@ -68,7 +68,12 @@ export default function AdminLogin() {
           disabled={busy}
           className="rounded-md bg-indigo-600 px-5 py-3 font-semibold text-white disabled:opacity-60"
         >
-          {busy ? "Signing in..." : "Sign in"}
+          {busy ? (
+            <span className="inline-flex items-center gap-2" role="status">
+              <span className="admin-login-spinner" aria-hidden="true" />
+              Signing in...
+            </span>
+          ) : "Sign in"}
         </button>
       </form>
 

@@ -1,5 +1,12 @@
 import { useCallback, useEffect, useState } from "react";
-import { FaGithub, FaSignOutAlt, FaTrash, FaEdit, FaRedo } from "react-icons/fa";
+import {
+  FaExternalLinkAlt,
+  FaGithub,
+  FaSignOutAlt,
+  FaTrash,
+  FaEdit,
+  FaRedo,
+} from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import api from "../lib/api";
 
@@ -18,6 +25,8 @@ export default function Admin() {
   const [accessChecked, setAccessChecked] = useState(false);
   const [setupRequired, setSetupRequired] = useState(null);
   const [projects, setProjects] = useState([]);
+  const [projectsLoading, setProjectsLoading] = useState(true);
+  const [projectsLoadFailed, setProjectsLoadFailed] = useState(false);
   const [form, setForm] = useState(emptyForm);
   const [editingId, setEditingId] = useState(null);
   const [message, setMessage] = useState("");
@@ -29,9 +38,13 @@ export default function Admin() {
     try {
       const data = await api.getProjects();
       setProjects(data);
+      setProjectsLoadFailed(false);
       setError("");
     } catch (err) {
+      setProjectsLoadFailed(true);
       setError(`Could not load projects: ${err.message}`);
+    } finally {
+      setProjectsLoading(false);
     }
   }, []);
 
@@ -176,6 +189,7 @@ export default function Admin() {
       }
       setMessage(editingId ? "Project updated." : "Project added.");
       resetForm();
+      setProjectsLoading(true);
       await loadProjects();
     } catch (saveError) {
       setError(`Could not save project: ${saveError.message}`);
@@ -195,6 +209,7 @@ export default function Admin() {
       await api.deleteProject(project.id);
       setMessage("Project removed.");
       if (editingId === project.id) resetForm();
+      setProjectsLoading(true);
       await loadProjects();
     } catch (deleteError) {
       setError(`Could not remove project: ${deleteError.message}`);
@@ -205,9 +220,29 @@ export default function Admin() {
 
   if (!accessChecked) {
     return (
-      <main className="mx-auto mt-24 max-w-3xl px-6 py-12">
-        <h1 className="font-display text-3xl font-bold text-navy-950">Project admin</h1>
-        <p className="mt-4 text-slate-700">Checking administrator access...</p>
+      <main className="mx-auto mt-20 max-w-5xl px-6 py-12" aria-busy="true">
+        <span className="sr-only" role="status">Loading admin dashboard...</span>
+        <div className="flex flex-wrap items-center justify-between gap-4">
+          <div className="w-full max-w-xl space-y-3">
+            <div className="admin-skeleton h-9 w-64 rounded-md" aria-hidden="true" />
+            <div className="admin-skeleton h-4 w-full max-w-lg rounded" aria-hidden="true" />
+          </div>
+          <div className="admin-skeleton h-10 w-28 rounded-md" aria-hidden="true" />
+        </div>
+        <div className="mt-8 space-y-4 rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
+          <div className="admin-skeleton h-6 w-40 rounded" aria-hidden="true" />
+          <div className="grid gap-4 sm:grid-cols-2">
+            <div className="admin-skeleton h-10 rounded-md" aria-hidden="true" />
+            <div className="admin-skeleton h-10 rounded-md" aria-hidden="true" />
+            <div className="admin-skeleton h-24 rounded-md sm:col-span-2" aria-hidden="true" />
+          </div>
+        </div>
+        <div className="mt-10 space-y-3" aria-hidden="true">
+          <div className="admin-skeleton h-7 w-56 rounded" />
+          {[0, 1, 2].map((item) => (
+            <div key={item} className="admin-skeleton h-20 rounded-xl" />
+          ))}
+        </div>
       </main>
     );
   }
@@ -408,11 +443,22 @@ export default function Admin() {
         <h2 id="project-list-heading" className="font-display text-2xl font-bold text-navy-950">
           Published projects ({projects.length})
         </h2>
-        {projects.length === 0 ? (
+        {projectsLoading ? (
+          <div className="mt-4 space-y-3" aria-busy="true">
+            <span className="sr-only" role="status">Loading projects...</span>
+            {[0, 1, 2].map((item) => (
+              <div
+                key={item}
+                className="admin-skeleton h-20 rounded-xl border border-slate-200"
+                aria-hidden="true"
+              />
+            ))}
+          </div>
+        ) : projects.length === 0 && !projectsLoadFailed ? (
           <p className="mt-4 text-slate-600">
             No projects yet. Add your first project using the form above.
           </p>
-        ) : (
+        ) : projects.length > 0 ? (
           <ul className="mt-4 divide-y divide-slate-200 rounded-xl border border-slate-200 bg-white">
             {projects.map((project) => (
               <li
@@ -424,6 +470,26 @@ export default function Admin() {
                   <p className="text-sm text-slate-600">{project.category}</p>
                 </div>
                 <div className="flex gap-2">
+                  {project.repository_url && (
+                    <a
+                      href={project.repository_url}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="inline-flex items-center gap-2 rounded-md border px-3 py-2 font-semibold"
+                    >
+                      <FaGithub aria-hidden="true" /> GitHub
+                    </a>
+                  )}
+                  {project.live_url && (
+                    <a
+                      href={project.live_url}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="inline-flex items-center gap-2 rounded-md border px-3 py-2 font-semibold"
+                    >
+                      <FaExternalLinkAlt aria-hidden="true" /> Live site
+                    </a>
+                  )}
                   <button
                     type="button"
                     onClick={() => startEditing(project)}
@@ -443,7 +509,7 @@ export default function Admin() {
               </li>
             ))}
           </ul>
-        )}
+        ) : null}
       </section>
     </main>
   );

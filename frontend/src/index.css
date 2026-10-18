@@ -40,6 +40,33 @@ html {
 .skill-card:nth-child(2n) .skill-floating-icon {
   animation-delay: 1.4s;
 }
+.admin-skeleton {
+  background: linear-gradient(90deg, #e2e8f0 25%, #f1f5f9 37%, #e2e8f0 63%);
+  background-size: 400% 100%;
+  animation: admin-shimmer 1.4s ease infinite;
+}
+.admin-login-spinner {
+  width: 1rem;
+  height: 1rem;
+  border: 2px solid rgb(255 255 255 / 45%);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: admin-spin 700ms linear infinite;
+}
+@keyframes admin-shimmer {
+  to {
+    background-position: -200% 0;
+  }
+}
+@keyframes admin-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+.App[data-theme="dark"] .admin-skeleton {
+  background: linear-gradient(90deg, #263548 25%, #334155 37%, #263548 63%);
+  background-size: 400% 100%;
+}
 @keyframes skill-icon-float {
   0%, 100% {
     transform: translateY(0);
@@ -190,6 +217,10 @@ section {
     animation: none;
   }
   .skill-floating-icon {
+    animation: none;
+  }
+  .admin-skeleton,
+  .admin-login-spinner {
     animation: none;
   }
 }

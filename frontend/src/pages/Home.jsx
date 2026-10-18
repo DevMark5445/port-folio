@@ -159,8 +159,8 @@ export default function Hero() {
                       </a>
                     )}
                     {repositoryUrl && (
-                      <a href={repositoryUrl} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 rounded-md border border-slate-300 px-4 py-2 text-sm font-semibold text-navy-950 transition hover:border-orange-500 hover:text-orange-600">
-                        <FaGithub aria-hidden="true" /> Source code
+                      <a href={repositoryUrl} className="inline-flex items-center gap-2 rounded-md border border-slate-300 px-4 py-2 text-sm font-semibold text-navy-950 transition hover:border-orange-500 hover:text-orange-600">
+                        <FaGithub aria-hidden="true" /> GitHub
                       </a>
                     )}
                   </div>
