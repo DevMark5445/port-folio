@@ -26,9 +26,11 @@ code.
    `/admin`. Public user registration is not available.
 
 4. Paste a public GitHub repository URL and use **Import** to fill in the title,
-   category, and description. Add a live/deploy URL or a preview image if you
-   want, then save. The project is stored in the backend's MongoDB database and
-   appears on the portfolio immediately (or after a refresh).
+   category, and description. Enter any public website link before saving; it
+   does not need to be hosted on Vercel. Every project includes a **Visit live
+   site** link on the portfolio. A preview image is optional. The project is
+   stored in the backend's MongoDB database and appears on the portfolio
+   immediately (or after a refresh).
 
 This template provides a minimal setup to get React working in Vite with HMR and
 some Oxlint rules.

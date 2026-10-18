@@ -155,7 +155,7 @@ export default function Hero() {
                   <div className="mt-6 flex flex-wrap gap-3">
                     {liveUrl && (
                       <a href={liveUrl} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 rounded-md bg-orange-500 px-4 py-2 text-sm font-semibold text-white transition hover:bg-orange-600">
-                        View live <FaExternalLinkAlt aria-hidden="true" />
+                        Visit live site <FaExternalLinkAlt aria-hidden="true" />
                       </a>
                     )}
                     {repositoryUrl && (
