@@ -155,7 +155,7 @@ function GithubImporter({ onImport, disabled }) {
           <FaGithub className="mr-2 inline" aria-hidden="true" />
           Import from GitHub
         </h2>
-        <a href={githubHref} target="_blank" rel="noopener noreferrer" className={secondaryBtn}>
+        <a href="https://github.com/DevMark5445" className={secondaryBtn}>
           <FaExternalLinkAlt aria-hidden="true" /> Open GitHub
         </a>
       </div>
