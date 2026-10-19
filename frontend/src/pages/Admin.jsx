@@ -4,6 +4,8 @@ import {
   FaGithub,
   FaGlobe,
   FaSignOutAlt,
+  FaChevronDown,
+  FaUserCircle,
   FaTrash,
   FaEdit,
   FaRedo,
@@ -288,7 +290,9 @@ function ProjectPreview({ form }) {
 
 export default function Admin() {
   const navigate = useNavigate();
+  const accountMenuRef = useRef(null);
   const [session, setSession] = useState(null);
+  const [accountMenuOpen, setAccountMenuOpen] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
   const [accessChecked, setAccessChecked] = useState(false);
   const [setupRequired, setSetupRequired] = useState(null);
@@ -305,6 +309,28 @@ export default function Admin() {
   const [retryCount, setRetryCount] = useState(0);
 
   const dirty = JSON.stringify(form) !== JSON.stringify(baseline);
+
+  useEffect(() => {
+    if (!accountMenuOpen) return undefined;
+
+    const closeMenu = (event) => {
+      if (event.type === "keydown" && event.key === "Escape") {
+        setAccountMenuOpen(false);
+      } else if (
+        event.type === "pointerdown" &&
+        !accountMenuRef.current?.contains(event.target)
+      ) {
+        setAccountMenuOpen(false);
+      }
+    };
+
+    document.addEventListener("pointerdown", closeMenu);
+    document.addEventListener("keydown", closeMenu);
+    return () => {
+      document.removeEventListener("pointerdown", closeMenu);
+      document.removeEventListener("keydown", closeMenu);
+    };
+  }, [accountMenuOpen]);
 
   const loadProjects = useCallback(async () => {
     try {
@@ -395,6 +421,7 @@ export default function Admin() {
 
   const handleSignOut = useCallback(() => {
     api.setToken(null);
+    setAccountMenuOpen(false);
     setSession(null);
     setIsAdmin(false);
     setAccessChecked(true);
@@ -628,9 +655,40 @@ export default function Admin() {
             portfolio within a minute, or after a refresh. No redeploy needed.
           </p>
         </div>
-        <button type="button" onClick={handleSignOut} className={secondaryBtn}>
-          <FaSignOutAlt aria-hidden="true" /> Sign out
-        </button>
+        <div ref={accountMenuRef} className="relative shrink-0">
+          <button
+            type="button"
+            onClick={() => setAccountMenuOpen((open) => !open)}
+            aria-label={`Admin account: ${session.username}`}
+            aria-haspopup="true"
+            aria-expanded={accountMenuOpen}
+            aria-controls="admin-account-menu"
+            className={`${secondaryBtn} max-w-full`}
+          >
+            <FaUserCircle aria-hidden="true" />
+            <span className="max-w-40 truncate">{session.username}</span>
+            <FaChevronDown aria-hidden="true" className="text-xs" />
+          </button>
+          {accountMenuOpen && (
+            <div
+              id="admin-account-menu"
+              className="absolute right-0 z-20 mt-2 w-64 rounded-lg border border-slate-200 bg-white p-4 shadow-lg"
+            >
+              <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">
+                Signed in as
+              </p>
+              <p className="mt-2 break-words font-semibold text-slate-900">{session.username}</p>
+              <p className="mt-1 break-words text-sm text-slate-600">{session.email}</p>
+              <button
+                type="button"
+                onClick={handleSignOut}
+                className="mt-4 flex w-full items-center gap-2 rounded-md border-t border-slate-200 pt-3 text-left font-semibold text-red-700 hover:text-red-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+              >
+                <FaSignOutAlt aria-hidden="true" /> Sign out
+              </button>
+            </div>
+          )}
+        </div>
       </div>
 
       <div aria-live="polite" className="empty:hidden">
